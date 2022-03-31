@@ -18,8 +18,16 @@ public class JogoController {
 
     @GET
     @Produces("text/plain")
-    public List<Jogo> getJogos() {
-        return jogoService.getJogo();
+    public Response getJogos(@HeaderParam("Authorization") String authorization) {
+
+        if(!"Bearer codigo123".equalsIgnoreCase(authorization)) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        return Response
+                .ok(jogoService.getJogo())
+                .build();
     }
 
     @POST
@@ -75,6 +83,4 @@ public class JogoController {
                     .build();
         }
     }
-
-
 }

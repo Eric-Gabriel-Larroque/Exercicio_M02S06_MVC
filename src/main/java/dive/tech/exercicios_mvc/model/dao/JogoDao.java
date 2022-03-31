@@ -66,6 +66,13 @@ public class JogoDao {
         }
 
         public Jogo deleteJogo(Long id){
-                return null;
+                Jogo jogoDeletado = null;
+                for(Jogo jogo: jogos) {
+                        if(jogo.getId().equals(id)) {
+                                jogo.setAtivo(false);
+                                jogoDeletado = jogo;
+                        }
+                }
+                return jogoDeletado;
         }
 }
