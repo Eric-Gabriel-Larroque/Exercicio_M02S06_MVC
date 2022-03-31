@@ -17,7 +17,15 @@ public class EmpresaController {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createEmpresa(@Valid Empresa empresa) {
+    public Response createEmpresa(@Valid Empresa empresa,
+                                  @HeaderParam("Authorization") String authorization) {
+
+        if(!"Bearer codigo123".equalsIgnoreCase(authorization)) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+
         try {
             Empresa empresaCriada = empresaService.createEmpresa(empresa);
             return Response

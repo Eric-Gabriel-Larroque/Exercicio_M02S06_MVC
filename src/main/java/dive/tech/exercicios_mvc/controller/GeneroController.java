@@ -5,10 +5,7 @@ import dive.tech.exercicios_mvc.model.service.GeneroService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
@@ -20,7 +17,15 @@ public class GeneroController {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createGenero(@Valid Genero genero) {
+    public Response createGenero(@Valid Genero genero,
+                                 @HeaderParam("Authorization") String authorization) {
+
+        if(!"Bearer codigo123".equalsIgnoreCase(authorization)) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+
         try {
             Genero generoCriado = generoService.createGenero(genero);
             return Response
