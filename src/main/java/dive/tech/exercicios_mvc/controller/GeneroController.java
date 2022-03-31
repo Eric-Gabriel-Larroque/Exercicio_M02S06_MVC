@@ -1,12 +1,15 @@
 package dive.tech.exercicios_mvc.controller;
 
+import dive.tech.exercicios_mvc.model.entity.Empresa;
 import dive.tech.exercicios_mvc.model.entity.Genero;
 import dive.tech.exercicios_mvc.model.service.GeneroService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @ApplicationScoped
 @Path("/genero")
@@ -51,5 +54,19 @@ public class GeneroController {
         return Response
                 .ok(generoService.getGeneros())
                 .build();
+    }
+
+    @GET
+    @Path("/html")
+    @Produces(MediaType.TEXT_HTML)
+    public String getGeneroHtml() {
+        String html = "<html><ul>";
+        List<Genero> empresas = generoService.getGeneros();
+
+        for (Genero genero : empresas) {
+            html += "<li>" + genero.getId() + ", " + genero.getNome() + "</li>";
+        }
+        html += "</ul></html>";
+        return html;
     }
 }

@@ -1,12 +1,15 @@
 package dive.tech.exercicios_mvc.controller;
 
+import dive.tech.exercicios_mvc.model.entity.Empresa;
 import dive.tech.exercicios_mvc.model.entity.Jogo;
 import dive.tech.exercicios_mvc.model.service.JogoService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @ApplicationScoped
 @Path("/jogo")
@@ -104,5 +107,19 @@ public class JogoController {
                     .status(Response.Status.BAD_REQUEST)
                     .build();
         }
+    }
+
+    @GET
+    @Path("/html")
+    @Produces(MediaType.TEXT_HTML)
+    public String getJogoHtml() {
+        String html = "<html><ul>";
+        List<Jogo> empresas = jogoService.getJogos();
+
+        for (Jogo jogo : empresas) {
+            html += "<li>" + jogo.getId() + ", " + jogo.getNome() + "</li>";
+        }
+        html += "</ul></html>";
+        return html;
     }
 }

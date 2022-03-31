@@ -6,7 +6,9 @@ import dive.tech.exercicios_mvc.model.service.EmpresaService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @ApplicationScoped
 @Path("/empresa")
@@ -52,4 +54,19 @@ public class EmpresaController {
                 .ok(empresaService.getEmpresas())
                 .build();
     }
+
+    @GET
+    @Path("/html")
+    @Produces(MediaType.TEXT_HTML)
+    public String getEmpresaHtml() {
+        String html = "<html><ul>";
+        List<Empresa> empresas = empresaService.getEmpresas();
+
+        for (Empresa empresa : empresas) {
+            html += "<li>" + empresa.getId() + ", " + empresa.getNome() + "</li>";
+        }
+        html += "</ul></html>";
+        return html;
+    }
+
 }
