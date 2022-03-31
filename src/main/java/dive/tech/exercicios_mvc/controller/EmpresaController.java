@@ -38,4 +38,18 @@ public class EmpresaController {
                     .build();
         }
     }
+
+    @GET
+    @Produces("text/plain")
+    public Response getEmpresas(@HeaderParam("Authorization") String authorization) {
+
+        if(!"Bearer codigo123".equalsIgnoreCase(authorization)) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        return Response
+                .ok(empresaService.getEmpresas())
+                .build();
+    }
 }

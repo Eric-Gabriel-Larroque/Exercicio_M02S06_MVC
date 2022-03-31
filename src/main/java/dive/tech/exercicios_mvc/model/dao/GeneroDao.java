@@ -1,10 +1,14 @@
 package dive.tech.exercicios_mvc.model.dao;
 
+import dive.tech.exercicios_mvc.model.entity.Empresa;
 import dive.tech.exercicios_mvc.model.entity.Genero;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static dive.tech.exercicios_mvc.util.Validation.validaListaVazia;
 
 @ApplicationScoped
 public class GeneroDao {
@@ -18,5 +22,16 @@ public class GeneroDao {
         genero.setId((listSize+1));
         generos.add(genero);
         return genero;
+    }
+
+    public List<Genero> getGeneros() {
+        List<Genero> listaGeneros = generos;
+        validaListaVazia(Collections.singletonList(listaGeneros));
+        for(Genero genero: listaGeneros) {
+            if(!genero.isAtivo()) {
+                listaGeneros.remove(genero);
+            }
+        }
+        return listaGeneros;
     }
 }

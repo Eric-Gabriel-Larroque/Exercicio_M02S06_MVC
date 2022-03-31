@@ -38,4 +38,18 @@ public class GeneroController {
                     .build();
         }
     }
+
+    @GET
+    @Produces("text/plain")
+    public Response getGeneros(@HeaderParam("Authorization") String authorization) {
+
+        if(!"Bearer codigo123".equalsIgnoreCase(authorization)) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .build();
+        }
+        return Response
+                .ok(generoService.getGeneros())
+                .build();
+    }
 }

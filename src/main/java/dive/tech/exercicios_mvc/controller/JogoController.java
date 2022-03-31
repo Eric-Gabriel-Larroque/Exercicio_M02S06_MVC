@@ -24,7 +24,7 @@ public class JogoController {
                     .build();
         }
         return Response
-                .ok(jogoService.getJogo())
+                .ok(jogoService.getJogos())
                 .build();
     }
 

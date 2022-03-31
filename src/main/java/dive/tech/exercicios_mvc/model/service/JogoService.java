@@ -11,7 +11,7 @@ public class JogoService {
 
     JogoDao jogoDao = new JogoDao();
 
-    public List<Jogo> getJogo() {
+    public List<Jogo> getJogos() {
         return jogoDao.getJogos();
     }
 
